@@ -6,11 +6,11 @@ execute:
   echo: true
 
 book:
-  title: "YOUR PROJECT TITLE"
+  title: "Electric Vehicle Population in Washington State"
   author:
-    - AUTHOR1 (UNI1)
-    - AUTHOR2 (UNI2)
-  repo-url: https://github.com/YOUR_GITHUB_ACCOUNT/REPO_NAME
+    - Sage Wu (sw3849)
+    - Yue Wu (yw4172)
+  repo-url: https://github.com/sw547/EVpop
   date: today
   page-footer:
     right: |
