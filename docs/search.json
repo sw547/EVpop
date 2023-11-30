@@ -18,7 +18,7 @@
     "href": "data.html#missing-value-analysis",
     "title": "2  Data",
     "section": "2.3 Missing value analysis",
-    "text": "2.3 Missing value analysis"
+    "text": "2.3 Missing value analysis\n\n\n\n\n\nThere’s no missing value in Electric Vehicle Population Size History dataset, as we can tell from the graph.\n\n\n\n\n\n\n\n\n\n\nAs for Electric Vehicle Population Data dataset, it might appear at first that missing values only exist in columns that we’re not interested in. However, we notice entries with value of “0” for Base MSRP and Electric Range, which clearly does NOT make sense and thus should be treated as missing values. From the graph we can tell that other variables of interest have no missing values. Almost all values of Base MSRP are missing and about a half of Electric Range values are missing, with a extremly low percentage of rows not missing values from any columns. We also notice that for some specific model, we have instances for which Base MSRP is missing and instances for which Base MSRP is not missing, similar with Electric Range. We will address this issue when preprocessing the data, by filling known missing values using non-missing instances and filling unknown missing values with data provided by official websites of vehicle brands."
   },
   {
     "objectID": "data.html#research-plan",
