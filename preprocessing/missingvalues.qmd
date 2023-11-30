@@ -1,0 +1,47 @@
+```{r}
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(tibble)
+library(redav)
+
+evt <- read.csv("/Users/wy/EV/data/Electric_Vehicle_Population_Size_History.csv")
+colSums(is.na(evt)) %>%
+  sort(decreasing = TRUE)
+```
+```{r}
+plot_missing(evt, percent = TRUE)
+```
+
+```{r}
+evp <- read.csv("/Users/wy/EV/data/Electric_Vehicle_Population_Data.csv")
+
+evp <- evp %>%
+  select(-Legislative.District, -Postal.Code, -`X2020.Census.Tract`, -`VIN..1.10.`,
+         -Model.Year, -`Clean.Alternative.Fuel.Vehicle..CAFV..Eligibility`, -DOL.Vehicle.ID, 
+         -Vehicle.Location, -Electric.Utility) %>%
+  mutate(Base.MSRP = ifelse(Base.MSRP == 0, NA, Base.MSRP), 
+         Electric.Range = ifelse(Electric.Range == 0, NA, Electric.Range))
+
+colSums(is.na(evp)) %>%
+  sort(decreasing = TRUE)
+```
+
+```{r}
+tidyevp <- evp %>% 
+    rownames_to_column("id") %>% 
+    gather(key, value, -id) %>% 
+    mutate(missing = ifelse(is.na(value), "yes", "no"))
+
+ggplot(tidyevp, aes(x = key, y = id, fill = missing)) +
+  geom_tile() + 
+  ggtitle("Electric Vehicle Population Missing Values") +
+  ylab('') + 
+  scale_fill_viridis_d() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+```{r}
+plot_missing(evp, percent = TRUE)
+```
+
+

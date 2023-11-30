@@ -206,6 +206,23 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="missing-value-analysis" class="level2" data-number="2.3">
 <h2 data-number="2.3" class="anchored" data-anchor-id="missing-value-analysis"><span class="header-section-number">2.3</span> Missing value analysis</h2>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="data_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>There’s no missing value in <em>Electric Vehicle Population Size History</em> dataset, as we can tell from the graph.</p>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="data_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<p><img src="data_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>As for <em>Electric Vehicle Population Data</em> dataset, it might appear at first that missing values only exist in columns that we’re not interested in. However, we notice entries with value of “0” for Base MSRP and Electric Range, which clearly does NOT make sense and thus should be treated as missing values. From the graph we can tell that other variables of interest have no missing values. Almost all values of Base MSRP are missing and about a half of Electric Range values are missing, with a extremly low percentage of rows not missing values from any columns. We also notice that for some specific model, we have instances for which Base MSRP is missing and instances for which Base MSRP is not missing, similar with Electric Range. We will address this issue when preprocessing the data, by filling known missing values using non-missing instances and filling unknown missing values with data provided by official websites of vehicle brands.</p>
 
 
 </section>
