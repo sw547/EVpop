@@ -1,5 +1,31 @@
 # Data
 
 ## Description
+In this project, we will use two datasets about electric vehicles in Washing State. 
+Both datasets are collected and maintained by Washington State 
+Department of Licensing, and are published on [Washington Open Data](https://data.wa.gov/). 
+The two datasets are created on April 16, 2019 and May 8, 2019 respectively and are updated monthly with the latest update on November 15th. 
+
+
+The first dataset [*Electric Vehicle Population Data*](https://data.wa.gov/Transportation/Electric-Vehicle-Population-Data/f6w7-q2d2) 
+contains information about current electric vehicle registrations in WA. 
+It has 159,467 rows each representing a registered electric vehicle, and 17 columns including 
+VIN (1-10), County, City, State, Postal Code, Model Year, Make, Model, Electric Vehicle Type, 
+Clean Alternative Fuel Vehicle (CAFV) Eligibility, Electric Range, Base MSRP, Legislative District, 
+DOL Vehicle ID, Vehicle Location, Electric Utility, and 2020 Census Tract. 
+The dataset is clean except for some undocumented entries of Electric Range and Base MSRP represented as 0, which clearly 
+doesn't make sense. We will analyze this further in section 2.3. 
+
+
+The second dataset 
+[*Electric Vehicle Population Size History*](https://data.wa.gov/Transportation/Electric-Vehicle-Population-Size-History/d886-d5q2) 
+contains monthly updated total count of Plug-In Hybrid Electric Vehicle, 
+Battery Electric Vehicle, and Electric Vehicle Total in WA from January, 2017 to Octobor, 2023. 
+It has 82 rows and 4 columns. This dataset is ready-to-use as it has no issues. 
+
+
+Our data source allows us to download csv files which we will then upload to our github repository for further usage.
+
+## Research Plan
 
 ## Missing value analysis
