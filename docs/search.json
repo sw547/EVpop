@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Electric Vehicle Population in Washington State",
     "section": "",
-    "text": "1 Introduction"
+    "text": "1 Introduction\nThe automotive landscape is undergoing a profound shift towards sustainable and eco-friendly transportation, and at the forefront of this evolution is the increasing adoption of electric vehicles (EVs). Washington, as a state actively embracing this change, provides an ideal viewpoint for our investigation. Motivated by a profound interest in unraveling the dynamics of this burgeoning market, our focus is on delving into the electric vehicle population dataset in Washington state. The significance of transitioning to electric vehicles extends beyond individual consumer choices, impacting environmental sustainability, infrastructure development, and the automotive industry as a whole. Our objective is to contribute to the analysis of the electric vehicle market in Washington state, enriching the discussion on sustainable mobility.\nQuestions of Interest:\n\nTrends in Electric Vehicle Adoption\n\nWhat patterns and trends characterize the adoption of electric vehicles in Washington state over the years?\nAre the patterns and trends the same for both plug-in hybrid electric vehicle (PHEV) and battery electric vehicle (BEV)?\n\nPopular Electric Vehicle Models/Makes\n\nWhich electric vehicle brands (makes) and models have gained prominence in Washington state?\nDoes consumer preference align with certain characteristics, such as brand reputation?\nAre the popular brands different for PHEV and BEV? What about for different counties within Washington state?\n\nDistribution of Electric Range\n\nHow is the electric range distributed among the electric vehicles?\nIs it correlated with EV type? Is it different for PHEV and BEV?\n\nPrice Analysis\n\nHow is the base Manufacturer’s Suggested Retail Price (MSRP) distributed among the electric vehicles?\nWhat is the relationship between the base MSRP and other features, such as electric range or model year?"
   },
   {
     "objectID": "data.html#description",
@@ -14,17 +14,17 @@
     "text": "2.1 Description\nIn this project, we will use two datasets about electric vehicles in Washing State. Both datasets are collected and maintained by Washington State Department of Licensing, and are published on Washington Open Data. The two datasets are created on April 16, 2019 and May 8, 2019 respectively and are updated monthly with the latest update on November 15th.\nThe first dataset Electric Vehicle Population Data contains information about current electric vehicle registrations in WA. It has 159,467 rows each representing a registered electric vehicle, and 17 columns including VIN (1-10), County, City, State, Postal Code, Model Year, Make, Model, Electric Vehicle Type, Clean Alternative Fuel Vehicle (CAFV) Eligibility, Electric Range, Base MSRP, Legislative District, DOL Vehicle ID, Vehicle Location, Electric Utility, and 2020 Census Tract. The dataset is clean except for some undocumented entries of Electric Range and Base MSRP represented as 0, which clearly doesn’t make sense. We will analyze this further in section 2.3.\nThe second dataset Electric Vehicle Population Size History contains monthly updated total count of Plug-In Hybrid Electric Vehicle, Battery Electric Vehicle, and Electric Vehicle Total in WA from January, 2017 to Octobor, 2023. It has 82 rows and 4 columns. This dataset is ready-to-use as it has no issues.\nOur data source allows us to download csv files which we will then upload to our github repository for further usage."
   },
   {
-    "objectID": "data.html#missing-value-analysis",
-    "href": "data.html#missing-value-analysis",
-    "title": "2  Data",
-    "section": "2.3 Missing value analysis",
-    "text": "2.3 Missing value analysis"
-  },
-  {
     "objectID": "data.html#research-plan",
     "href": "data.html#research-plan",
     "title": "2  Data",
     "section": "2.2 Research Plan",
     "text": "2.2 Research Plan"
+  },
+  {
+    "objectID": "data.html#missing-value-analysis",
+    "href": "data.html#missing-value-analysis",
+    "title": "2  Data",
+    "section": "2.3 Missing value analysis",
+    "text": "2.3 Missing value analysis"
   }
 ]

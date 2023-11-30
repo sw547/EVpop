@@ -1,1 +1,19 @@
 # Introduction
+
+The automotive landscape is undergoing a profound shift towards sustainable and eco-friendly transportation, and at the forefront of this evolution is the increasing adoption of electric vehicles (EVs). Washington, as a state actively embracing this change, provides an ideal viewpoint for our investigation. Motivated by a profound interest in unraveling the dynamics of this burgeoning market, our focus is on delving into the electric vehicle population dataset in Washington state. The significance of transitioning to electric vehicles extends beyond individual consumer choices, impacting environmental sustainability, infrastructure development, and the automotive industry as a whole. Our objective is to contribute to the analysis of the electric vehicle market in Washington state, enriching the discussion on sustainable mobility.
+
+**Questions of Interest:**
+
+-   Trends in Electric Vehicle Adoption
+    -   What patterns and trends characterize the adoption of electric vehicles in Washington state over the years?
+    -   Are the patterns and trends the same for both plug-in hybrid electric vehicle (PHEV) and battery electric vehicle (BEV)?
+-   Popular Electric Vehicle Models/Makes
+    -   Which electric vehicle brands (makes) and models have gained prominence in Washington state?
+    -   Does consumer preference align with certain characteristics, such as brand reputation?
+    -   Are the popular brands different for PHEV and BEV? What about for different counties within Washington state?
+-   Distribution of Electric Range
+    -   How is the electric range distributed among the electric vehicles?
+    -   Is it correlated with EV type? Is it different for PHEV and BEV?
+-   Price Analysis
+    -   How is the base Manufacturer's Suggested Retail Price (MSRP) distributed among the electric vehicles?
+    -   What is the relationship between the base MSRP and other features, such as electric range or model year?
