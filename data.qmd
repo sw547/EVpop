@@ -92,6 +92,7 @@ library(tidyr)
 library(tibble)
 library(redav)
 evt <- read.csv("/Users/wy/EV/data/Electric_Vehicle_Population_Size_History.csv")
+names(evt) <- c("Date", "PHEV_Count", "BEV_Count", "EV_Count")
 plot_missing(evt, percent = TRUE)
 ```
 There's no missing value in *Electric Vehicle Population Size History* dataset, as we can tell from the graph.
@@ -102,9 +103,11 @@ evp <- read.csv("/Users/wy/EV/data/Electric_Vehicle_Population_Data.csv")
 evp <- evp %>%
   select(-Legislative.District, -Postal.Code, -`X2020.Census.Tract`, -`VIN..1.10.`,
          -Model.Year, -`Clean.Alternative.Fuel.Vehicle..CAFV..Eligibility`, -DOL.Vehicle.ID, 
-         -Vehicle.Location, -Electric.Utility) %>%
+         -Vehicle.Location, -Electric.Utility, -State) %>%
   mutate(Base.MSRP = ifelse(Base.MSRP == 0, NA, Base.MSRP), 
          Electric.Range = ifelse(Electric.Range == 0, NA, Electric.Range))
+
+names(evp) <- c("County", "City", "Make", "Model", "Type", "Range", "MSRP")
 
 tidyevp <- evp %>% 
     rownames_to_column("id") %>% 
