@@ -25,12 +25,14 @@ Year, Make, Model, Electric Vehicle Type, Clean Alternative Fuel Vehicle
 Vehicle ID, Vehicle Location, Electric Utility, and 2020 Census Tract.
 The dataset is clean except for some undocumented entries of Electric
 Range and Base MSRP represented as 0, which clearly doesn't make sense.
-We will analyze this further in section 2.3.
+We will analyze this further in section 2.3. Note that some vehicles registered 
+in WA are from other states close to WA. When doing visualizations we filter
+those out and only focus on electric vehicles in WA.
 
 The second dataset [*Electric Vehicle Population Size
 History*](https://data.wa.gov/Transportation/Electric-Vehicle-Population-Size-History/d886-d5q2)
 contains monthly updated total count of Plug-In Hybrid Electric Vehicle,
-Battery Electric Vehicle, and Electric Vehicle Total in WA from January,
+Battery Electric Vehicle, and Electric Vehicle Total registered in WA from January,
 2017 to October, 2023. It has 82 rows and 4 columns. This dataset is
 ready-to-use as it has no issues.
 
@@ -101,6 +103,7 @@ There's no missing value in *Electric Vehicle Population Size History* dataset, 
 evp <- read.csv("/Users/wy/EV/data/Electric_Vehicle_Population_Data.csv")
 
 evp <- evp %>%
+  filter(State == "WA") %>%
   select(-Legislative.District, -Postal.Code, -`X2020.Census.Tract`, -`VIN..1.10.`,
          -Model.Year, -`Clean.Alternative.Fuel.Vehicle..CAFV..Eligibility`, -DOL.Vehicle.ID, 
          -Vehicle.Location, -Electric.Utility, -State) %>%
@@ -128,6 +131,5 @@ As for *Electric Vehicle Population Data* dataset, it might appear at first that
 only exist in columns that we're not interested in. However, we notice entries with value of "0" for 
 Base MSRP and Electric Range, which clearly does NOT make sense and thus should be treated as missing 
 values. From the graph we can tell that other variables of interest have no missing values. Almost all values 
-of Base MSRP are missing and about a half of Electric Range values are missing, with a extremly low percentage 
-of rows not missing values from any columns. We also notice that for some specific model, we have instances for which Base MSRP is missing and instances for which Base MSRP is not missing, similar with Electric Range. We will address 
-this issue when preprocessing the data, by filling known missing values using non-missing instances and filling unknown missing values with data provided by official websites of vehicle brands.
+of Base MSRP are missing and about a half of Electric Range values are missing, with an extremely low percentage 
+of rows not missing values from any columns. We also notice that for some specific model, we have instances for which Base MSRP is missing and instances for which Base MSRP is not missing, similar with Electric Range. We address this issue when pre-processing the data, by filling known missing values using non-missing instances and filling unknown missing values with data provided by [Kelley Blue Book](https://www.kbb.com/).
