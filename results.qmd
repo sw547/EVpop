@@ -1,11 +1,146 @@
 # Results
 
+```{r echo=FALSE, message=FALSE}
+# Data Preprocessing for Win
+library(readr)
+library(dplyr)
+library(tidyr)
+# EV historical data
+hist_url = "https://raw.githubusercontent.com/sw547/EVpop/main/data/Electric_Vehicle_Population_Size_History.csv"
+hist <- read_csv(hist_url)
+names(hist) <- c("Date", "PHEV_Count", "BEV_Count", "EV_Count")
+
+# EV population data
+evpop_url = "https://raw.githubusercontent.com/sw547/EVpop/main/data/Electric_Vehicle_Population_Data_Updated.csv"
+evpop <- read_csv(evpop_url)
+
+evpop <- evpop %>%
+  filter(`State` == "WA") %>%
+  select(-`Legislative District`, -`Postal Code`, -`2020 Census Tract`, -`VIN (1-10)`, -`Model Year`, -`Clean Alternative Fuel Vehicle (CAFV) Eligibility`, -`DOL Vehicle ID`, -`Vehicle Location`, -`Electric Utility`, -State)
+
+names(evpop) <- c("County", "City", "Make", "Model", "Type", "Range", "MSRP")
+
+# EV historical data by county
+hist_county_url = "https://raw.githubusercontent.com/sw547/EVpop/main/data/Electric_Vehicle_Population_Size_History_By_County.csv"
+hist_county <- read_csv(hist_county_url)
+
+hist_county <- hist_county %>%
+  filter(State == "WA")
+
+names(hist_county) = c("Date","County","State","Use","BEV","PHEV","EV","NonEV","V","EV_perc")
+
+```
+
 ## EV Trend and Geological Distribution
+
+### How Many Electric Vehicles on the Road?
+
+```{r}
+#| warning: false
+#| message: false
+library(ggplot2)
+library(dplyr)
+hist <- hist %>%
+  mutate(Date = as.Date(Date, format = "%B %d %Y"))
+
+hist_long <- hist %>%
+  select(Date, PHEV_Count, BEV_Count) %>%
+  gather(key = "VehicleType", value = "Count", -Date)
+
+ggplot(hist_long, aes(x = Date, y = Count, fill = VehicleType)) +
+  geom_bar(stat = "identity", position = "stack") +
+  scale_fill_manual(values = c("PHEV_Count" = "#b2e061", "BEV_Count" = "#7eb0d5")) +
+  labs(title = "Total Electric Vehicles Registered in WA Over Time",
+       x = "Date",
+       y = "Count",
+       fill = "Vehicle Type") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1),
+        legend.position = "bottom")
+
+```
+
+Electric vehicle ownership surged remarkably from 22,425 units in January 2017 to 159,467 by October 2023, marking a more than seven fold increase. This trend is evident in the first graph, which illustrates an increasing growth rate each year. Additionally, both Plug-in Hybrid Electric Vehicles (PHEVs) and Battery Electric Vehicles (BEVs) have seen a rise in their numbers. However, the growth in BEV numbers has outpaced that of PHEVs.
+
+Along with surge in overall EV numbers, there has been a notable shift in the composition of EV types. The proportion of BEVs has grown significantly, particularly in 2023. Over the last seven years, BEVs have not only increased in count but also consistently maintained a higher percentage compared to PHEVs.
+
+### How Many EV are there in Each County?
+
+```{r}
+#| warning: false
+#| message: false
+#| fig-width: 12
+#| fig-height: 8
+library(sf)
+
+ev_count_per_county <- evpop %>%
+  group_by(County) %>%
+  summarise(EV_Count = n())
+
+counties <- st_read("/Users/wsqia/OneDrive/文档/547files/Columbia/courses/STAT5702 EDAV/Final Project/WA_County_Boundaries.dbf", quiet = TRUE)
+
+counties <- counties %>%
+  select(JURISDIC_2, geometry)
+names(counties) <- c("County", "geometry")
+  
+geo_data <- merge(counties, ev_count_per_county, by = 'County', all.x = TRUE)
+
+ggplot(data = geo_data) +
+  geom_sf(aes(fill = EV_Count), color = NA) +  
+  geom_sf(color = "darkblue", fill = NA, size = 1) + 
+  geom_sf_text(aes(label = County), size = 3, check_overlap = TRUE) +  
+  scale_fill_distiller(palette = "Purples", direction = 1) + 
+  theme_minimal() +
+  theme(axis.title.x = element_blank(),  
+        axis.title.y = element_blank(),  
+        axis.text.x = element_blank(),   
+        axis.text.y = element_blank(),  
+        panel.grid.major = element_blank(),  
+        panel.grid.minor = element_blank(),
+        plot.title = element_text(size = 20)) + 
+  labs(title = 'Number of EVs by County in Washington State', 
+       fill = 'EV Count')
+
+```
+King County stands out for its high number of electric vehicles (EVs) compared to other counties in Washington. Neighboring Snohomish and Pierce Counties also demonstrate a significant number of EV adoptions, with Clark County following closely in terms of EV counts.
+
+![Outsourced Graph: Population Density in Washington State](https://github.com/sw547/EVpop/blob/main/data/Population_Density_in_WA.png?raw=true) [link to source](https://www.census.gov/library/stories/state-by-state/washington-population-change-between-census-decade.html#:~:text=Race%20and%20ethnicity%20(White%20alone,%25%2C%20up%20from%2054.9%25).)
+
+In terms of population, King County leads with 2,269,675 residents, while Pierce and Snohomish rank second and third with populations of 921,130 and 827,957, respectively. These counties, particularly King, Pierce, and Clark, have population densities exceeding 500 people per square mile. Snohomish County, with a density between 200 and 499.9 people per square mile, also exhibits a notable concentration of population. This pattern suggests a potential correlation between population density and the number of EV adoptions. However, further research is required to establish a definitive correlation or causative relationship between these factors.
 
 ## Popular EV Make
 
 ## Price
 
 ## Electric Range
+
+### Do people Care about the Electic Range of EVs?
+
+```{r}
+#| warning: false
+#| message: false
+ggplot(evpop, aes(x = Range)) +
+  geom_histogram(binwidth = 20, fill = "#7eb0d5", color = "#115f9a") +
+  theme_minimal() +
+  labs(title = "Histogram of Electric Range of EVs",
+       x = "Electric Range",
+       y = "Count")
+```
+From the histogram above, it's apparent that the electric range of EVs predominantly falls into two groupings. The first cluster is centered at approximately 50 miles, indicating a significant number of EVs with a lower electric range. The second, more dispersed cluster spans from 200 to 400 miles, suggesting a wide array of EVs offering mid to high electric range capabilities. Apart from these, there is an exceptional category exceeding 500 miles, which is an outlier. The following boxplot shows a more nuanced analysis of electric range distribution.
+
+```{r}
+#| warning: false
+#| message: false
+ggplot(evpop, aes(x = Type, y = Range)) +
+  geom_boxplot(orientation = "vertical") +
+  theme_minimal() +
+  coord_flip() +
+  labs(title = "Distribution of Electric Range for BEVs and PHEVs",
+       x = "Vehicle Type",
+       y = "Electric Range")
+```
+The boxplot analysis indicates that PHEVs primarily constitute the first cluster with a narrower range, reflecting less variation in their electric range. With a median of approximately 25 miles, PHEVs generally offer a shorter electric range than BEVs, which aligns with their dual-energy design incorporating gasoline. Additionally, the presence of outliers suggests that some PHEVs have much higher electric range than the majority.
+
+Conversely, BEVs, which make up the second cluster, display a much wider range, indicative of a broader spectrum of electric capabilities. The median range for BEVs is just under 300 miles, significantly surpassing that of PHEVs, which reflects their reliance solely on battery power. Notably, the BEV distribution includes outliers on both the lower and higher ends, pointing to exceptional models deviating from the typical range.
 
 ## Price vs. Electric Range

@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -142,10 +176,17 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#ev-trend-and-geological-distribution" id="toc-ev-trend-and-geological-distribution" class="nav-link active" data-scroll-target="#ev-trend-and-geological-distribution"><span class="header-section-number">3.1</span> EV Trend and Geological Distribution</a></li>
+  <li><a href="#ev-trend-and-geological-distribution" id="toc-ev-trend-and-geological-distribution" class="nav-link active" data-scroll-target="#ev-trend-and-geological-distribution"><span class="header-section-number">3.1</span> EV Trend and Geological Distribution</a>
+  <ul class="collapse">
+  <li><a href="#how-many-electric-vehicles-on-the-road" id="toc-how-many-electric-vehicles-on-the-road" class="nav-link" data-scroll-target="#how-many-electric-vehicles-on-the-road"><span class="header-section-number">3.1.1</span> How Many Electric Vehicles on the Road?</a></li>
+  <li><a href="#how-many-ev-are-there-in-each-county" id="toc-how-many-ev-are-there-in-each-county" class="nav-link" data-scroll-target="#how-many-ev-are-there-in-each-county"><span class="header-section-number">3.1.2</span> How Many EV are there in Each County?</a></li>
+  </ul></li>
   <li><a href="#popular-ev-make" id="toc-popular-ev-make" class="nav-link" data-scroll-target="#popular-ev-make"><span class="header-section-number">3.2</span> Popular EV Make</a></li>
   <li><a href="#price" id="toc-price" class="nav-link" data-scroll-target="#price"><span class="header-section-number">3.3</span> Price</a></li>
-  <li><a href="#electric-range" id="toc-electric-range" class="nav-link" data-scroll-target="#electric-range"><span class="header-section-number">3.4</span> Electric Range</a></li>
+  <li><a href="#electric-range" id="toc-electric-range" class="nav-link" data-scroll-target="#electric-range"><span class="header-section-number">3.4</span> Electric Range</a>
+  <ul class="collapse">
+  <li><a href="#do-people-care-about-the-electic-range-of-evs" id="toc-do-people-care-about-the-electic-range-of-evs" class="nav-link" data-scroll-target="#do-people-care-about-the-electic-range-of-evs"><span class="header-section-number">3.4.1</span> Do people Care about the Electic Range of EVs?</a></li>
+  </ul></li>
   <li><a href="#price-vs.-electric-range" id="toc-price-vs.-electric-range" class="nav-link" data-scroll-target="#price-vs.-electric-range"><span class="header-section-number">3.5</span> Price vs.&nbsp;Electric Range</a></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/sw547/EVpop/edit/main/results.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/sw547/EVpop/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
@@ -172,6 +213,81 @@ ul.task-list li input[type="checkbox"] {
 
 <section id="ev-trend-and-geological-distribution" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="ev-trend-and-geological-distribution"><span class="header-section-number">3.1</span> EV Trend and Geological Distribution</h2>
+<section id="how-many-electric-vehicles-on-the-road" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="how-many-electric-vehicles-on-the-road"><span class="header-section-number">3.1.1</span> How Many Electric Vehicles on the Road?</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>hist <span class="ot">&lt;-</span> hist <span class="sc">%&gt;%</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">Date =</span> <span class="fu">as.Date</span>(Date, <span class="at">format =</span> <span class="st">"%B %d %Y"</span>))</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>hist_long <span class="ot">&lt;-</span> hist <span class="sc">%&gt;%</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Date, PHEV_Count, BEV_Count) <span class="sc">%&gt;%</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gather</span>(<span class="at">key =</span> <span class="st">"VehicleType"</span>, <span class="at">value =</span> <span class="st">"Count"</span>, <span class="sc">-</span>Date)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(hist_long, <span class="fu">aes</span>(<span class="at">x =</span> Date, <span class="at">y =</span> Count, <span class="at">fill =</span> VehicleType)) <span class="sc">+</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">"identity"</span>, <span class="at">position =</span> <span class="st">"stack"</span>) <span class="sc">+</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">"PHEV_Count"</span> <span class="ot">=</span> <span class="st">"#b2e061"</span>, <span class="st">"BEV_Count"</span> <span class="ot">=</span> <span class="st">"#7eb0d5"</span>)) <span class="sc">+</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Total Electric Vehicles Registered in WA Over Time"</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Date"</span>,</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Count"</span>,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">"Vehicle Type"</span>) <span class="sc">+</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>),</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">legend.position =</span> <span class="st">"bottom"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>Electric vehicle ownership surged remarkably from 22,425 units in January 2017 to 159,467 by October 2023, marking a more than seven fold increase. This trend is evident in the first graph, which illustrates an increasing growth rate each year. Additionally, both Plug-in Hybrid Electric Vehicles (PHEVs) and Battery Electric Vehicles (BEVs) have seen a rise in their numbers. However, the growth in BEV numbers has outpaced that of PHEVs.</p>
+<p>Along with surge in overall EV numbers, there has been a notable shift in the composition of EV types. The proportion of BEVs has grown significantly, particularly in 2023. Over the last seven years, BEVs have not only increased in count but also consistently maintained a higher percentage compared to PHEVs.</p>
+</section>
+<section id="how-many-ev-are-there-in-each-county" class="level3" data-number="3.1.2">
+<h3 data-number="3.1.2" class="anchored" data-anchor-id="how-many-ev-are-there-in-each-county"><span class="header-section-number">3.1.2</span> How Many EV are there in Each County?</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>ev_count_per_county <span class="ot">&lt;-</span> evpop <span class="sc">%&gt;%</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(County) <span class="sc">%&gt;%</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">EV_Count =</span> <span class="fu">n</span>())</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>counties <span class="ot">&lt;-</span> <span class="fu">st_read</span>(<span class="st">"/Users/wsqia/OneDrive/文档/547files/Columbia/courses/STAT5702 EDAV/Final Project/WA_County_Boundaries.dbf"</span>, <span class="at">quiet =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>counties <span class="ot">&lt;-</span> counties <span class="sc">%&gt;%</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(JURISDIC_2, geometry)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(counties) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"County"</span>, <span class="st">"geometry"</span>)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>geo_data <span class="ot">&lt;-</span> <span class="fu">merge</span>(counties, ev_count_per_county, <span class="at">by =</span> <span class="st">'County'</span>, <span class="at">all.x =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> geo_data) <span class="sc">+</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="fu">aes</span>(<span class="at">fill =</span> EV_Count), <span class="at">color =</span> <span class="cn">NA</span>) <span class="sc">+</span>  </span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(<span class="at">color =</span> <span class="st">"darkblue"</span>, <span class="at">fill =</span> <span class="cn">NA</span>, <span class="at">size =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> County), <span class="at">size =</span> <span class="dv">3</span>, <span class="at">check_overlap =</span> <span class="cn">TRUE</span>) <span class="sc">+</span>  </span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_fill_distiller</span>(<span class="at">palette =</span> <span class="st">"Purples"</span>, <span class="at">direction =</span> <span class="dv">1</span>) <span class="sc">+</span> </span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.title.x =</span> <span class="fu">element_blank</span>(),  </span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.title.y =</span> <span class="fu">element_blank</span>(),  </span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.x =</span> <span class="fu">element_blank</span>(),   </span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.text.y =</span> <span class="fu">element_blank</span>(),  </span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.major =</span> <span class="fu">element_blank</span>(),  </span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>        <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">20</span>)) <span class="sc">+</span> </span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">'Number of EVs by County in Washington State'</span>, </span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>       <span class="at">fill =</span> <span class="st">'EV Count'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="1152"></p>
+</div>
+</div>
+<p>King County stands out for its high number of electric vehicles (EVs) compared to other counties in Washington. Neighboring Snohomish and Pierce Counties also demonstrate a significant number of EV adoptions, with Clark County following closely in terms of EV counts.</p>
+<p><img src="https://github.com/sw547/EVpop/blob/main/data/Population_Density_in_WA.png?raw=true" class="img-fluid" alt="Outsourced Graph: Population Density in Washington State"> <a href="https://www.census.gov/library/stories/state-by-state/washington-population-change-between-census-decade.html#:~:text=Race%20and%20ethnicity%20(White%20alone,%25%2C%20up%20from%2054.9%25).">link to source</a></p>
+<p>In terms of population, King County leads with 2,269,675 residents, while Pierce and Snohomish rank second and third with populations of 921,130 and 827,957, respectively. These counties, particularly King, Pierce, and Clark, have population densities exceeding 500 people per square mile. Snohomish County, with a density between 200 and 499.9 people per square mile, also exhibits a notable concentration of population. This pattern suggests a potential correlation between population density and the number of EV adoptions. However, further research is required to establish a definitive correlation or causative relationship between these factors.</p>
+</section>
 </section>
 <section id="popular-ev-make" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="popular-ev-make"><span class="header-section-number">3.2</span> Popular EV Make</h2>
@@ -181,6 +297,41 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="electric-range" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="electric-range"><span class="header-section-number">3.4</span> Electric Range</h2>
+<section id="do-people-care-about-the-electic-range-of-evs" class="level3" data-number="3.4.1">
+<h3 data-number="3.4.1" class="anchored" data-anchor-id="do-people-care-about-the-electic-range-of-evs"><span class="header-section-number">3.4.1</span> Do people Care about the Electic Range of EVs?</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(evpop, <span class="fu">aes</span>(<span class="at">x =</span> Range)) <span class="sc">+</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">20</span>, <span class="at">fill =</span> <span class="st">"#7eb0d5"</span>, <span class="at">color =</span> <span class="st">"#115f9a"</span>) <span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Histogram of Electric Range of EVs"</span>,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Electric Range"</span>,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Count"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>From the histogram above, it’s apparent that the electric range of EVs predominantly falls into two groupings. The first cluster is centered at approximately 50 miles, indicating a significant number of EVs with a lower electric range. The second, more dispersed cluster spans from 200 to 400 miles, suggesting a wide array of EVs offering mid to high electric range capabilities. Apart from these, there is an exceptional category exceeding 500 miles, which is an outlier. The following boxplot shows a more nuanced analysis of electric range distribution.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(evpop, <span class="fu">aes</span>(<span class="at">x =</span> Type, <span class="at">y =</span> Range)) <span class="sc">+</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">orientation =</span> <span class="st">"vertical"</span>) <span class="sc">+</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Distribution of Electric Range for BEVs and PHEVs"</span>,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Vehicle Type"</span>,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Electric Range"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>The boxplot analysis indicates that PHEVs primarily constitute the first cluster with a narrower range, reflecting less variation in their electric range. With a median of approximately 25 miles, PHEVs generally offer a shorter electric range than BEVs, which aligns with their dual-energy design incorporating gasoline. Additionally, the presence of outliers suggests that some PHEVs have much higher electric range than the majority.</p>
+<p>Conversely, BEVs, which make up the second cluster, display a much wider range, indicative of a broader spectrum of electric capabilities. The median range for BEVs is just under 300 miles, significantly surpassing that of PHEVs, which reflects their reliance solely on battery power. Notably, the BEV distribution includes outliers on both the lower and higher ends, pointing to exceptional models deviating from the typical range.</p>
+</section>
 </section>
 <section id="price-vs.-electric-range" class="level2" data-number="3.5">
 <h2 data-number="3.5" class="anchored" data-anchor-id="price-vs.-electric-range"><span class="header-section-number">3.5</span> Price vs.&nbsp;Electric Range</h2>
