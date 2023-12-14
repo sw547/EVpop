@@ -1,0 +1,27 @@
+```{r}
+library(dplyr)
+library(lubridate)
+df<-read.csv("https://raw.githubusercontent.com/sw547/EVpop/main/data/Electric_Vehicle_Population_Size_History_By_County.csv") %>%
+  filter(State=="WA") %>%
+  mutate(Date=mdy(Date)) %>%
+  group_by(Date, County) %>%
+  summarise(ev=sum(`Electric.Vehicle..EV..Total`),
+            total=sum(`Total.Vehicles`)) %>%
+  mutate(EV_perc=(ev/total)*100) %>%
+  select(Date,County,EV_perc) %>%
+  arrange(County, Date)
+
+# write.csv(df, file="d3_data", row.names=FALSE)
+
+df1<-read.csv("https://raw.githubusercontent.com/sw547/EVpop/main/data/Electric_Vehicle_Population_Size_History_By_County.csv") %>%
+  filter(State=="WA") %>%
+  select(Date,`Electric.Vehicle..EV..Total`,`Total.Vehicles`) %>%
+  mutate(Date=mdy(Date))%>%
+  group_by(Date) %>%
+  summarise(EV=sum(`Electric.Vehicle..EV..Total`),
+            Total=sum(`Total.Vehicles`)) %>%
+  mutate(EV_perc=EV/Total*100) %>%
+  select(Date,EV_perc)
+
+write.csv(df1, file="d3_data_1.csv", row.names=FALSE)
+```
