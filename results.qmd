@@ -251,6 +251,13 @@ top_makes_by_county <- evpop %>%
   slice_max(Count, n = 3) %>%
   ungroup()
 
+max_count_by_county <- top_makes_by_county %>%
+  group_by(County) %>%
+  summarise(MaxCount = max(Count)) %>%
+  arrange(desc(MaxCount))
+
+top_makes_by_county$County <- factor(top_makes_by_county$County, levels = max_count_by_county$County)
+
 ggplot(top_makes_by_county, aes(x = Make, y = Count, fill = Make)) +
   geom_bar(stat = "identity") +
   scale_fill_manual(values = c("#fd7f6f", "#7ebed5", "#b2e961", "#bd7ebe", "#ffb55a", "#ffee65", "#beb9db", "#fdcce5")) +
