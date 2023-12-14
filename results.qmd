@@ -65,7 +65,7 @@ hist_long <- hist %>%
 
 ggplot(hist_long, aes(x = Date, y = Count, fill = VehicleType)) +
   geom_bar(stat = "identity", position = "stack") +
-  scale_fill_manual(values = c("PHEV_Count" = "#b2e061", "BEV_Count" = "#7eb0d5")) +
+  scale_fill_manual(values = c("PHEV_Count" = "#beb9db", "BEV_Count" = "#fdcce5")) +
   labs(title = "Total Electric Vehicles Registered in WA Over Time",
        x = "Date",
        y = "Count",
@@ -116,9 +116,38 @@ ggplot(data = geo_data) +
         plot.title = element_text(size = 20)) +
   labs(title = 'Number of EVs by County in Washington State',
        fill = 'EV Count')
-
 ```
-King County stands out for its high number of electric vehicles (EVs) compared to other counties in Washington. Neighboring Snohomish and Pierce Counties also demonstrate a significant number of EV adoptions, with Clark County following closely in terms of EV counts.
+
+
+*Note: Due to the disproportionately high number of EVs in King County, presenting the counts for other counties on the same scale is challenging. To address this, a graph utilizing a logarithmic scale for the counts has been provided for clearer comparison.*
+
+```{r}
+#| warning: false
+#| message: false
+#| fig-width: 12
+#| fig-height: 8
+
+geo_data <- geo_data %>%
+  mutate(EV_Count_log = log(EV_Count))
+
+ggplot(data = geo_data) +
+  geom_sf(aes(fill = EV_Count_log), color = NA) +  
+  geom_sf(color = "darkblue", fill = NA, size = 1) + 
+  geom_sf_text(aes(label = County), size = 3, check_overlap = TRUE) +  
+  scale_fill_distiller(palette = "Purples", direction = 1) + 
+  theme_minimal() +
+  theme(axis.title.x = element_blank(),  
+        axis.title.y = element_blank(),  
+        axis.text.x = element_blank(),   
+        axis.text.y = element_blank(),  
+        panel.grid.major = element_blank(),  
+        panel.grid.minor = element_blank(),
+        plot.title = element_text(size = 20)) + 
+  labs(title = 'Number of EVs by County in Washington State on Log Scale', 
+       fill = 'log(EV Count)')
+```
+
+King County stands out for its high number of electric vehicles (EVs) compared to other counties in Washington. Neighboring Snohomish and Pierce Counties also demonstrate a significant number of EV adoptions, with Clark County following closely in terms of EV counts. Additionally, it is worth noting that Garfield County has a distinctly lower EV adoption, highlighting a sharp contrast within the state.
 
 ![Outsourced Graph: Population Density in Washington State](https://github.com/sw547/EVpop/blob/main/data/Population_Density_in_WA.png?raw=true) [link to source](https://www.census.gov/library/stories/state-by-state/washington-population-change-between-census-decade.html#:~:text=Race%20and%20ethnicity%20(White%20alone,%25%2C%20up%20from%2054.9%25).)
 
@@ -127,6 +156,7 @@ In terms of population, King County leads with 2,269,675 residents, while Pierce
 ## Popular EV Make
 
 ### What are the most popular electric vehicle makes in Washington State?
+
 ```{r message=FALSE, warning=FALSE, fig.width=10, fig.height=15}
 Make_Count <- evp%>%
   group_by(Make) %>%
@@ -170,6 +200,7 @@ ggplot(Make_Count_PHEV,aes(x =Make, y = Count)) +
   theme(text=element_text(size=15),element_line(size=0.5)) +
   labs(x = "Make", y = "Count", title = "PHEV Make Popularity in WA")
 ```
+
 There are 38 different electric vehicle makes in the market in WA, 28 of which produces Battery Electric Vehicle and 26 of which produces Plugin-in Hybrid Electric Vehicle, and 16 of the makes are in both markets. 
 
 Not surprisingly, Tesla as a company known by almost everyone in the world is the most popular electric vehicle make in Washington State. Remarkably, the number of Tesla vehicles is approximately 4 times that of Nissan, the second most popular electric vehicle make in WA. Chevrolet follows as the third place. We can tell that there aren't any huge differences in count for makes other than from the champion to the runner up if we look at them from the most popular to the least popular.
@@ -181,6 +212,7 @@ As for Plugin-Hybrid Electric Vehicles, there's no brand of predominant position
 In summary, Tesla is the obvious champion here regarding EV and BEV popularity in WA. Toyota is the winner when it comes to PHEV, and Chevrolet outperforms when it comes to participating in both BEV and PHEV market in WA.
 
 ### What about models?
+
 ```{r message=FALSE, warning=FALSE, fig.width=6, fig.height=18}
 Model_Count <- evp %>%
   group_by(Make, Model) %>%
@@ -205,9 +237,40 @@ Now that we know about popular makes, we might wonder what are some popular mode
 
 ### County level? Do people have the same preference?
 
+```{r}
+#| warning: false
+#| message: false
+#| fig-width: 12
+#| fig-height: 8
+
+top_makes_by_county <- evpop %>%
+  group_by(County, Make) %>%
+  summarise(Count = n()) %>%
+  arrange(desc(Count)) %>%
+  group_by(County) %>%
+  slice_max(Count, n = 3) %>%
+  ungroup()
+
+ggplot(top_makes_by_county, aes(x = Make, y = Count, fill = Make)) +
+  geom_bar(stat = "identity") +
+  scale_fill_manual(values = c("#fd7f6f", "#7ebed5", "#b2e961", "#bd7ebe", "#ffb55a", "#ffee65", "#beb9db", "#fdcce5")) +
+  facet_wrap(~ County, scales = "free_y") +  
+  theme_minimal() +
+  theme(axis.text.x = element_blank(),
+      plot.title = element_text(size = 20)) + 
+  labs(title = "Top 3 Popular Car Brands in Each County",
+       x = "Brand (Make)",
+       y = "Frequency")
+```
+
+*Note: In the graphs for some counties, four brands are depicted. This occurs when there is an equal count for the third-ranking brand, resulting in a tie.*
+
+It is not surprising that Tesla dominants as the leading EV brand in nearly all counties. Also, Chevrolet consistently ranks within the top three brands in the majority of counties, reflecting its widespread popularity among both BEV and PHEV owners in Washington State, as illustrated in part 3.2.1. Intriguingly, despite Nissan being the second most favored EV brand statewide, it only features in the top three brands in about half of the counties, suggesting regional preferences that diverge from the overall state trend. Noticeably, Garfield County stands out with only four EVs registered, which is not enough to establish a trend.
+
 ## Price
 
 ### We can't ignore the price! What is the distribution of EV base MSRP in Washington State?
+
 ```{r message=FALSE, warning=FALSE}
 # one single entry of very high MSRP causes problem in histogram, thus topcoding
 # evp%>%
@@ -228,6 +291,7 @@ ggplot(evp_msrp_tc, aes(x = MSRP_tc)) +
 More than 70,000 of the Electric Vehicles in Washington State has a Base MSRP ranging from \$40,000 to \$50,000, making it the most common price range. The second most common price range is \$20,000 to \$30,000, which has less than a half of count compared to that of the most common price range. Then we have \$30,000 to \$40,000 and \$70,000 to \$80,000, which each contains about 20,000 electric vehicles. Note that when price exceeds \$50,000, count significantly drops. We can conclude that people lean more towards a more economical choice.
 
 ### Is there any noticable difference in distribution of prices between PHEV and BEV?
+
 ```{r message=FALSE, warning=FALSE, fig.width=15, fig.height=5}
 
 # since one extreme outlier makes the boxplot hard to read, we adjust y-axis limits(not x-axis because we do coord_flip)
@@ -243,6 +307,7 @@ ggplot(evp, aes(x = reorder(Type,MSRP, median), y = MSRP)) +
   labs(x = "EV Type", y = "Base MSRP ($)", title = "Multiple Boxplot of MSRP according to EV Type")
 
 ```
+
 There do exist a difference in price pattern between BEV and PHEV. In general, BEVs are more expensive than PHEVs, with respective median of around \$41k and \$32k. The interquartile range of PHEV is wider than that of BEV, but PHEV has more variability in price overall. There are more outliers for BEV base MSRP than for PHEV base MSRP, especially on the lower side as PHEV has no outliers on the lower side at all. In general, although BEVs are generally more expensive than PHEV, we can find the lowest prices on BEVs and the highest prices on PHEVs. Note that we set limits on the axis because of the existence of an extreme outlier. All of the vehicles except for one has Base MSRP less than \$220k, and that one exotic car is Porsche 918 which has a Base MSRP of \$845k.
 
 ## Electric Range
@@ -253,28 +318,33 @@ There do exist a difference in price pattern between BEV and PHEV. In general, B
 #| warning: false
 #| message: false
 ggplot(evpop, aes(x = Range)) +
-  geom_histogram(binwidth = 20, fill = "#7eb0d5", color = "#115f9a") +
+  geom_histogram(binwidth = 50, boundary = 0, fill = "#7eb0d5", color = "#115f9a", closed="right") +
+  scale_x_continuous(breaks = seq(0, 500, by = 50)) + 
   theme_minimal() +
   labs(title = "Histogram of Electric Range of EVs",
        x = "Electric Range",
        y = "Count")
 ```
-From the histogram above, it's apparent that the electric range of EVs predominantly falls into two groupings. The first cluster is centered at approximately 50 miles, indicating a significant number of EVs with a lower electric range. The second, more dispersed cluster spans from 200 to 400 miles, suggesting a wide array of EVs offering mid to high electric range capabilities. Apart from these, there is an exceptional category exceeding 500 miles, which is an outlier. The following boxplot shows a more nuanced analysis of electric range distribution.
+
+From the histogram above, it's apparent that the electric range of EVs predominantly falls into two groupings. The first cluster is centered at approximately 50 miles, indicating a significant number of EVs with a lower electric range. The second, more dispersed cluster spans from 200 to 400 miles, suggesting a wide array of EVs offering mid to high electric range capabilities. Apart from these, there is an exceptional category exceeding 500 miles, which is an outlier.
+
+This distribution suggests a trend toward consumer preference for EVs within these two distinct range categories. Notably, there are relatively few purchases of EVs with the highest range capabilities, which may be due to limiting factors such as cost or low supply due to current technological constraints.
 
 ```{r}
 #| warning: false
 #| message: false
-ggplot(evpop, aes(x = Type, y = Range)) +
-  geom_boxplot(orientation = "vertical") +
+ggplot(evpop, aes(x = reorder(Type, Range, median), y = Range)) +
+  geom_boxplot(fill = c("#beb9db", "#fdcce5")) +
   theme_minimal() +
   coord_flip() +
   labs(title = "Distribution of Electric Range for BEVs and PHEVs",
        x = "Vehicle Type",
-       y = "Electric Range")
+       y = "Electric Range (miles)")
 ```
-The boxplot analysis indicates that PHEVs primarily constitute the first cluster with a narrower range, reflecting less variation in their electric range. With a median of approximately 25 miles, PHEVs generally offer a shorter electric range than BEVs, which aligns with their dual-energy design incorporating gasoline. Additionally, the presence of outliers suggests that some PHEVs have much higher electric range than the majority.
 
-Conversely, BEVs, which make up the second cluster, display a much wider range, indicative of a broader spectrum of electric capabilities. The median range for BEVs is just under 300 miles, significantly surpassing that of PHEVs, which reflects their reliance solely on battery power. Notably, the BEV distribution includes outliers on both the lower and higher ends, pointing to exceptional models deviating from the typical range.
+The boxplot analysis indicates that BEVs primarily constitute the second cluster in the histogram, with a wider range, reflecting higher variation in their electric range. The median range for BEVs is just under 300 miles, significantly surpassing that of PHEVs, which reflects their reliance solely on battery power. Notably, the BEV distribution includes outliers on both the lower and higher ends, pointing to exceptional models deviating from the typical range.
+
+Conversely, PHEVs, which make up the first cluster in the histogram, display a much smaller range, indicative of a narrower spectrum of electric capabilities. With a median of approximately 25 miles, PHEVs generally offer a shorter electric range than BEVs, which aligns with their dual-energy design incorporating gasoline. However, it is quite surprising that half of the hybrid electric vehicles can BARELY drive from Manhattan to Long Beach, solely on its battery. Additionally, the presence of outliers suggests that a few PHEVs have much higher electric range than the majority.
 
 ## Price vs. Electric Range
 
@@ -298,4 +368,5 @@ ggplot(msrp_range, aes(x = MSRP, y = Range, color=Type)) +
   scale_color_manual(values=c("#0d88e6","#e60049"))
 
 ```
+
 The scatterplot of Base MSRP vs. Electric Range for electric vehicles suggest that there's no clear correlation in the two variables, meaning that we do not get more electric range when we are spending more on an EV, and we observe that we actually get small electric range when we're spending more than \$130k since all the options in that price range are PHEV. On top of the price and electric range analysis in former parts, we can also see how each EV type performs on the both variable together. BEVs form a clear crowded cluster with electric range of 200 to 400 and base MSRP of \$20k to \$130k. PHEVs are crowded on the lower left side of the scatterplot and spans across the lower side. There are also some BEV points on the lower left side but they are generally seperated clearly with PHEV. Note that here we also set limits on the axis due to the Porsche 918 as in part 3.3.2. 
