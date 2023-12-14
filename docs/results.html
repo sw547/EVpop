@@ -20,6 +20,40 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -143,10 +177,22 @@ ul.task-list li input[type="checkbox"] {
    
   <ul>
   <li><a href="#ev-trend-and-geological-distribution" id="toc-ev-trend-and-geological-distribution" class="nav-link active" data-scroll-target="#ev-trend-and-geological-distribution"><span class="header-section-number">3.1</span> EV Trend and Geological Distribution</a></li>
-  <li><a href="#popular-ev-make" id="toc-popular-ev-make" class="nav-link" data-scroll-target="#popular-ev-make"><span class="header-section-number">3.2</span> Popular EV Make</a></li>
-  <li><a href="#price" id="toc-price" class="nav-link" data-scroll-target="#price"><span class="header-section-number">3.3</span> Price</a></li>
+  <li><a href="#popular-ev-make" id="toc-popular-ev-make" class="nav-link" data-scroll-target="#popular-ev-make"><span class="header-section-number">3.2</span> Popular EV Make</a>
+  <ul class="collapse">
+  <li><a href="#what-are-the-most-popular-electric-vehicle-makes-in-washington-state" id="toc-what-are-the-most-popular-electric-vehicle-makes-in-washington-state" class="nav-link" data-scroll-target="#what-are-the-most-popular-electric-vehicle-makes-in-washington-state"><span class="header-section-number">3.2.1</span> What are the most popular electric vehicle makes in Washington State?</a></li>
+  <li><a href="#what-about-models" id="toc-what-about-models" class="nav-link" data-scroll-target="#what-about-models"><span class="header-section-number">3.2.2</span> What about models?</a></li>
+  <li><a href="#county-level-do-people-have-the-same-preference" id="toc-county-level-do-people-have-the-same-preference" class="nav-link" data-scroll-target="#county-level-do-people-have-the-same-preference"><span class="header-section-number">3.2.3</span> County level? Do people have the same preference?</a></li>
+  </ul></li>
+  <li><a href="#price" id="toc-price" class="nav-link" data-scroll-target="#price"><span class="header-section-number">3.3</span> Price</a>
+  <ul class="collapse">
+  <li><a href="#we-cant-ignore-the-price-what-is-the-distribution-of-ev-base-msrp-in-washington-state" id="toc-we-cant-ignore-the-price-what-is-the-distribution-of-ev-base-msrp-in-washington-state" class="nav-link" data-scroll-target="#we-cant-ignore-the-price-what-is-the-distribution-of-ev-base-msrp-in-washington-state"><span class="header-section-number">3.3.1</span> We can’t ignore the price! What is the distribution of EV base MSRP in Washington State?</a></li>
+  <li><a href="#is-there-any-noticable-difference-in-distribution-of-prices-between-phev-and-bev" id="toc-is-there-any-noticable-difference-in-distribution-of-prices-between-phev-and-bev" class="nav-link" data-scroll-target="#is-there-any-noticable-difference-in-distribution-of-prices-between-phev-and-bev"><span class="header-section-number">3.3.2</span> Is there any noticable difference in distribution of prices between PHEV and BEV?</a></li>
+  </ul></li>
   <li><a href="#electric-range" id="toc-electric-range" class="nav-link" data-scroll-target="#electric-range"><span class="header-section-number">3.4</span> Electric Range</a></li>
-  <li><a href="#price-vs.-electric-range" id="toc-price-vs.-electric-range" class="nav-link" data-scroll-target="#price-vs.-electric-range"><span class="header-section-number">3.5</span> Price vs.&nbsp;Electric Range</a></li>
+  <li><a href="#price-vs.-electric-range" id="toc-price-vs.-electric-range" class="nav-link" data-scroll-target="#price-vs.-electric-range"><span class="header-section-number">3.5</span> Price vs.&nbsp;Electric Range</a>
+  <ul class="collapse">
+  <li><a href="#do-we-get-more-electric-range-if-were-paying-more-for-the-ev" id="toc-do-we-get-more-electric-range-if-were-paying-more-for-the-ev" class="nav-link" data-scroll-target="#do-we-get-more-electric-range-if-were-paying-more-for-the-ev"><span class="header-section-number">3.5.1</span> Do we get more Electric Range if we’re paying more for the EV?</a></li>
+  </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/sw547/EVpop/edit/main/results.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/sw547/EVpop/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
@@ -170,22 +216,208 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data Preprocessing for MacOS</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forcats)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>evp <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"https://raw.githubusercontent.com/sw547/EVpop/main/data/Electric_Vehicle_Population_Data_Updated.csv"</span>)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>evp <span class="ot">&lt;-</span> evp <span class="sc">%&gt;%</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(State <span class="sc">==</span> <span class="st">"WA"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Legislative.District, <span class="sc">-</span>Postal.Code, <span class="sc">-</span><span class="st">`</span><span class="at">X2020.Census.Tract</span><span class="st">`</span>, <span class="sc">-</span><span class="st">`</span><span class="at">VIN..1.10.</span><span class="st">`</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>         <span class="sc">-</span>Model.Year, <span class="sc">-</span><span class="st">`</span><span class="at">Clean.Alternative.Fuel.Vehicle..CAFV..Eligibility</span><span class="st">`</span>, <span class="sc">-</span>DOL.Vehicle.ID, </span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>         <span class="sc">-</span>Vehicle.Location, <span class="sc">-</span>Electric.Utility, <span class="sc">-</span>State)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(evp) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"County"</span>, <span class="st">"City"</span>, <span class="st">"Make"</span>, <span class="st">"Model"</span>, <span class="st">"Type"</span>, <span class="st">"Range"</span>, <span class="st">"MSRP"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
 <section id="ev-trend-and-geological-distribution" class="level2" data-number="3.1">
 <h2 data-number="3.1" class="anchored" data-anchor-id="ev-trend-and-geological-distribution"><span class="header-section-number">3.1</span> EV Trend and Geological Distribution</h2>
 </section>
 <section id="popular-ev-make" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="popular-ev-make"><span class="header-section-number">3.2</span> Popular EV Make</h2>
+<section id="what-are-the-most-popular-electric-vehicle-makes-in-washington-state" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="what-are-the-most-popular-electric-vehicle-makes-in-washington-state"><span class="header-section-number">3.2.1</span> What are the most popular electric vehicle makes in Washington State?</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>Make_Count <span class="ot">&lt;-</span> evp<span class="sc">%&gt;%</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Make) <span class="sc">%&gt;%</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Count =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Count)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>Make_Count<span class="sc">$</span>Make <span class="ot">&lt;-</span> <span class="fu">factor</span>(Make_Count<span class="sc">$</span>Make, <span class="at">levels =</span> Make_Count<span class="sc">$</span>Make)</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>Make_Count_BEV <span class="ot">&lt;-</span> evp<span class="sc">%&gt;%</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Type<span class="sc">==</span><span class="st">"Battery Electric Vehicle (BEV)"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Make) <span class="sc">%&gt;%</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Count =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Count)</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>Make_Count_BEV<span class="sc">$</span>Make <span class="ot">&lt;-</span> <span class="fu">factor</span>(Make_Count_BEV<span class="sc">$</span>Make, <span class="at">levels =</span> Make_Count_BEV<span class="sc">$</span>Make)</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>Make_Count_PHEV <span class="ot">&lt;-</span> evp<span class="sc">%&gt;%</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(Type<span class="sc">==</span><span class="st">"Plug-in Hybrid Electric Vehicle (PHEV)"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Make) <span class="sc">%&gt;%</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Count =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Count)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>Make_Count_PHEV<span class="sc">$</span>Make <span class="ot">&lt;-</span> <span class="fu">factor</span>(Make_Count_PHEV<span class="sc">$</span>Make, <span class="at">levels =</span> Make_Count_PHEV<span class="sc">$</span>Make)</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Make_Count,<span class="fu">aes</span>(<span class="at">x =</span>Make, <span class="at">y =</span> Count)) <span class="sc">+</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"#7eb0d5"</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">15</span>),<span class="fu">element_line</span>(<span class="at">size=</span><span class="fl">0.5</span>)) <span class="sc">+</span></span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Make"</span>, <span class="at">y =</span> <span class="st">"Count"</span>, <span class="at">title =</span> <span class="st">"EV Make Popularity in WA"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="960"></p>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Make_Count_BEV,<span class="fu">aes</span>(<span class="at">x =</span>Make, <span class="at">y =</span> Count)) <span class="sc">+</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"#fdcce5"</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">15</span>),<span class="fu">element_line</span>(<span class="at">size=</span><span class="fl">0.5</span>)) <span class="sc">+</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Make"</span>, <span class="at">y =</span> <span class="st">"Count"</span>, <span class="at">title =</span> <span class="st">"BEV Make Popularity in WA"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-2-2.png" class="img-fluid" width="960"></p>
+</div>
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Make_Count_PHEV,<span class="fu">aes</span>(<span class="at">x =</span>Make, <span class="at">y =</span> Count)) <span class="sc">+</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"#beb9db"</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">15</span>),<span class="fu">element_line</span>(<span class="at">size=</span><span class="fl">0.5</span>)) <span class="sc">+</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Make"</span>, <span class="at">y =</span> <span class="st">"Count"</span>, <span class="at">title =</span> <span class="st">"PHEV Make Popularity in WA"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-2-3.png" class="img-fluid" width="960"></p>
+</div>
+</div>
+<p>Not surprisingly, Tesla as a brand known by almost everyone in the world is the most popular electric vehicle make in Washington State.</p>
+</section>
+<section id="what-about-models" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="what-about-models"><span class="header-section-number">3.2.2</span> What about models?</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>Model_Count <span class="ot">&lt;-</span> evp <span class="sc">%&gt;%</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Make, Model) <span class="sc">%&gt;%</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">Count=</span><span class="fu">n</span>(), <span class="at">.groups=</span><span class="st">"drop"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(Make, <span class="fu">desc</span>(Count))</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>Model_Count<span class="sc">$</span>Make <span class="ot">&lt;-</span> <span class="fu">factor</span>(Model_Count<span class="sc">$</span>Make, <span class="at">levels =</span> Make_Count<span class="sc">$</span>Make)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>Model_Count <span class="ot">&lt;-</span> Model_Count <span class="sc">%&gt;%</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Make))</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(Model_Count, <span class="fu">aes</span>(<span class="at">x =</span> Count, <span class="at">y =</span> <span class="fu">reorder</span>(Model, Count))) <span class="sc">+</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color=</span><span class="st">"#4421af"</span>, <span class="at">size=</span><span class="fl">1.2</span>) <span class="sc">+</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_grid</span>(<span class="fu">fct_rev</span>(Make)<span class="sc">~</span>.,<span class="at">scale=</span><span class="st">"free_y"</span>,<span class="at">space=</span><span class="st">"free_y"</span>)<span class="sc">+</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_linedraw</span>() <span class="sc">+</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">6</span>),<span class="fu">element_line</span>(<span class="at">size=</span><span class="fl">0.3</span>))<span class="sc">+</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Count"</span>, <span class="at">y =</span> <span class="st">"Model"</span>, <span class="at">title =</span> <span class="st">"EV Model Popularity in WA facet by Make"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-3-1.png" class="img-fluid" width="480"></p>
+</div>
+</div>
+</section>
+<section id="county-level-do-people-have-the-same-preference" class="level3" data-number="3.2.3">
+<h3 data-number="3.2.3" class="anchored" data-anchor-id="county-level-do-people-have-the-same-preference"><span class="header-section-number">3.2.3</span> County level? Do people have the same preference?</h3>
+</section>
 </section>
 <section id="price" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="price"><span class="header-section-number">3.3</span> Price</h2>
+<section id="we-cant-ignore-the-price-what-is-the-distribution-of-ev-base-msrp-in-washington-state" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="we-cant-ignore-the-price-what-is-the-distribution-of-ev-base-msrp-in-washington-state"><span class="header-section-number">3.3.1</span> We can’t ignore the price! What is the distribution of EV base MSRP in Washington State?</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># one single entry of very high MSRP causes problem in histogram, thus topcoding</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># evp%&gt;%</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#   arrange(desc(MSRP)) %&gt;%</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#   select(MSRP)</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>evp_msrp_tc <span class="ot">&lt;-</span> evp <span class="sc">%&gt;%</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">MSRP_tc =</span> <span class="fu">ifelse</span>(MSRP <span class="sc">&gt;</span> <span class="dv">100000</span>, <span class="dv">100001</span>, MSRP))</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(evp_msrp_tc, <span class="fu">aes</span>(<span class="at">x =</span> MSRP_tc)) <span class="sc">+</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">10000</span>, <span class="at">boundary=</span> <span class="dv">10000</span>, <span class="at">fill =</span> <span class="st">"#7eb0d5"</span>,<span class="at">color=</span><span class="st">"black"</span>,<span class="at">closed=</span><span class="st">"right"</span>) <span class="sc">+</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">10000</span>, <span class="dv">110000</span>, <span class="at">by=</span><span class="dv">10000</span>),</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"10k"</span>,<span class="st">"20k"</span>,<span class="st">"30k"</span>,<span class="st">"40k"</span>,<span class="st">"50k"</span>,</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"60k"</span>,<span class="st">"70k"</span>,<span class="st">"80k"</span>,<span class="st">"90k"</span>,<span class="st">"100k"</span>,<span class="st">"inf"</span>)) <span class="sc">+</span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Base MSRP ($)"</span>, <span class="at">y =</span> <span class="st">"Count"</span>, <span class="at">title =</span> <span class="st">"EV MSRP Frenquency in WA"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-4-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="is-there-any-noticable-difference-in-distribution-of-prices-between-phev-and-bev" class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="is-there-any-noticable-difference-in-distribution-of-prices-between-phev-and-bev"><span class="header-section-number">3.3.2</span> Is there any noticable difference in distribution of prices between PHEV and BEV?</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># since one extreme outlier makes the boxplot hard to read, we adjust y-axis limits)</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(evp, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(Type,MSRP, median), <span class="at">y =</span> MSRP)) <span class="sc">+</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="fu">c</span>(<span class="st">"#beb9db"</span>, <span class="st">"#fdcce5"</span>)) <span class="sc">+</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()<span class="sc">+</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text=</span><span class="fu">element_text</span>(<span class="at">size=</span><span class="dv">20</span>))<span class="sc">+</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_y_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">220000</span>, <span class="at">by=</span><span class="dv">20000</span>),</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"0"</span>,<span class="st">"20k"</span>,<span class="st">"40k"</span>,<span class="st">"60k"</span>,<span class="st">"80k"</span>,<span class="st">"100k"</span>,</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"120k"</span>,<span class="st">"140k"</span>,<span class="st">"160k"</span>,<span class="st">"180k"</span>,<span class="st">"200k"</span>,<span class="st">"220k"</span>),</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">220000</span>)) <span class="sc">+</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"EV Type"</span>, <span class="at">y =</span> <span class="st">"Base MSRP ($)"</span>, <span class="at">title =</span> <span class="st">"Multiple Boxplot of MSRP according to EV Type"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="1440"></p>
+</div>
+</div>
+</section>
 </section>
 <section id="electric-range" class="level2" data-number="3.4">
 <h2 data-number="3.4" class="anchored" data-anchor-id="electric-range"><span class="header-section-number">3.4</span> Electric Range</h2>
 </section>
 <section id="price-vs.-electric-range" class="level2" data-number="3.5">
 <h2 data-number="3.5" class="anchored" data-anchor-id="price-vs.-electric-range"><span class="header-section-number">3.5</span> Price vs.&nbsp;Electric Range</h2>
+<section id="do-we-get-more-electric-range-if-were-paying-more-for-the-ev" class="level3" data-number="3.5.1">
+<h3 data-number="3.5.1" class="anchored" data-anchor-id="do-we-get-more-electric-range-if-were-paying-more-for-the-ev"><span class="header-section-number">3.5.1</span> Do we get more Electric Range if we’re paying more for the EV?</h3>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># When dealing with correlation of MSRP and EV Range, we drop duplicates</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>msrp_range <span class="ot">&lt;-</span> evp <span class="sc">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(Type, MSRP, Range) <span class="sc">%&gt;%</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(MSRP, Range, <span class="at">.keep_all=</span><span class="cn">TRUE</span>)</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="co"># we adjust limits of x-axis here to prevent that one extreme outlier</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="co"># from making the graph hard to read</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(msrp_range, <span class="fu">aes</span>(<span class="at">x =</span> MSRP, <span class="at">y =</span> Range, <span class="at">color=</span>Type)) <span class="sc">+</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">size=</span><span class="fl">1.2</span>,<span class="at">alpha=</span><span class="fl">0.8</span>) <span class="sc">+</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">0</span>, <span class="dv">220000</span>, <span class="at">by=</span><span class="dv">20000</span>),</span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>                     <span class="at">labels =</span> <span class="fu">c</span>(<span class="st">"0"</span>,<span class="st">"20k"</span>,<span class="st">"40k"</span>,<span class="st">"60k"</span>,<span class="st">"80k"</span>,<span class="st">"100k"</span>,</span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>                                <span class="st">"120k"</span>,<span class="st">"140k"</span>,<span class="st">"160k"</span>,<span class="st">"180k"</span>,<span class="st">"200k"</span>,<span class="st">"220k"</span>),</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>                     <span class="at">limits =</span> <span class="fu">c</span>(<span class="dv">0</span>,<span class="dv">220000</span>)) <span class="sc">+</span></span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Base MSRP ($)"</span>, <span class="at">y =</span> <span class="st">"Electric Range (miles)"</span>, <span class="at">title =</span> <span class="st">"EV MSRP vs. Electric Range"</span>) <span class="sc">+</span></span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">"#fdcce5"</span>,<span class="st">"#beb9db"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="results_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->

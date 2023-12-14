@@ -1,11 +1,153 @@
 # Results
+```{r message=FALSE, warning=FALSE}
+# Data Preprocessing for MacOS
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(forcats)
+evp <- read.csv("https://raw.githubusercontent.com/sw547/EVpop/main/data/Electric_Vehicle_Population_Data_Updated.csv")
 
+evp <- evp %>%
+  filter(State == "WA") %>%
+  select(-Legislative.District, -Postal.Code, -`X2020.Census.Tract`, -`VIN..1.10.`,
+         -Model.Year, -`Clean.Alternative.Fuel.Vehicle..CAFV..Eligibility`, -DOL.Vehicle.ID, 
+         -Vehicle.Location, -Electric.Utility, -State)
+
+names(evp) <- c("County", "City", "Make", "Model", "Type", "Range", "MSRP")
+```
 ## EV Trend and Geological Distribution
 
 ## Popular EV Make
 
+### What are the most popular electric vehicle makes in Washington State?
+```{r message=FALSE, warning=FALSE, fig.width=10, fig.height=15}
+Make_Count <- evp%>%
+  group_by(Make) %>%
+  summarise(Count = n()) %>%
+  arrange(Count)
+Make_Count$Make <- factor(Make_Count$Make, levels = Make_Count$Make)
+
+Make_Count_BEV <- evp%>%
+  filter(Type=="Battery Electric Vehicle (BEV)") %>%
+  group_by(Make) %>%
+  summarise(Count = n()) %>%
+  arrange(Count)
+Make_Count_BEV$Make <- factor(Make_Count_BEV$Make, levels = Make_Count_BEV$Make)
+
+Make_Count_PHEV <- evp%>%
+  filter(Type=="Plug-in Hybrid Electric Vehicle (PHEV)") %>%
+  group_by(Make) %>%
+  summarise(Count = n()) %>%
+  arrange(Count)
+Make_Count_PHEV$Make <- factor(Make_Count_PHEV$Make, levels = Make_Count_PHEV$Make)
+
+
+ggplot(Make_Count,aes(x =Make, y = Count)) +
+  geom_col(fill = "#7eb0d5", show.legend = FALSE) +
+  coord_flip() +
+  theme_minimal() +
+  theme(text=element_text(size=15),element_line(size=0.5)) +
+  labs(x = "Make", y = "Count", title = "EV Make Popularity in WA")
+
+ggplot(Make_Count_BEV,aes(x =Make, y = Count)) +
+  geom_col(fill = "#fdcce5", show.legend = FALSE) +
+  coord_flip() +
+  theme_minimal() +
+  theme(text=element_text(size=15),element_line(size=0.5)) +
+  labs(x = "Make", y = "Count", title = "BEV Make Popularity in WA")
+
+ggplot(Make_Count_PHEV,aes(x =Make, y = Count)) +
+  geom_col(fill = "#beb9db", show.legend = FALSE) +
+  coord_flip() +
+  theme_minimal() +
+  theme(text=element_text(size=15),element_line(size=0.5)) +
+  labs(x = "Make", y = "Count", title = "PHEV Make Popularity in WA")
+```
+Not surprisingly, Tesla as a brand known by almost everyone in the world is the most popular electric vehicle make in Washington State.
+
+### What about models?
+```{r message=FALSE, warning=FALSE, fig.width=5, fig.height=20}
+Model_Count <- evp %>%
+  group_by(Make, Model) %>%
+  summarise(Count=n(), .groups="drop") %>%
+  arrange(Make, desc(Count))
+
+Model_Count$Make <- factor(Model_Count$Make, levels = Make_Count$Make)
+
+Model_Count <- Model_Count %>%
+  arrange(desc(Make))
+
+ggplot(Model_Count, aes(x = Count, y = reorder(Model, Count))) +
+  geom_point(color="#4421af", size=1.2) +
+  facet_grid(fct_rev(Make)~.,scale="free_y",space="free_y")+
+  theme_linedraw() +
+  theme(text=element_text(size=6),element_line(size=0.3))+
+  labs(x = "Count", y = "Model", title = "EV Model Popularity in WA facet by Make")
+
+```
+
+### County level? Do people have the same preference?
+
 ## Price
+
+### We can't ignore the price! What is the distribution of EV base MSRP in Washington State?
+```{r message=FALSE, warning=FALSE}
+# one single entry of very high MSRP causes problem in histogram, thus topcoding
+# evp%>%
+#   arrange(desc(MSRP)) %>%
+#   select(MSRP)
+evp_msrp_tc <- evp %>%
+  mutate(MSRP_tc = ifelse(MSRP > 100000, 100001, MSRP))
+
+ggplot(evp_msrp_tc, aes(x = MSRP_tc)) +
+  geom_histogram(binwidth = 10000, boundary= 10000, fill = "#7eb0d5",color="black",closed="right") +
+  scale_x_continuous(breaks = seq(10000, 110000, by=10000),
+                     labels = c("10k","20k","30k","40k","50k",
+                                "60k","70k","80k","90k","100k","inf")) +
+  theme_minimal() +
+  labs(x = "Base MSRP ($)", y = "Count", title = "EV MSRP Frenquency in WA")
+```
+
+### Is there any noticable difference in distribution of prices between PHEV and BEV?
+```{r message=FALSE, warning=FALSE, fig.width=15, fig.height=5}
+
+# since one extreme outlier makes the boxplot hard to read, we adjust y-axis limits)
+ggplot(evp, aes(x = reorder(Type,MSRP, median), y = MSRP)) +
+  geom_boxplot(fill = c("#beb9db", "#fdcce5")) +
+  coord_flip()+
+  theme_minimal() +
+  theme(text=element_text(size=20))+
+  scale_y_continuous(breaks = seq(0, 220000, by=20000),
+                     labels = c("0","20k","40k","60k","80k","100k",
+                                "120k","140k","160k","180k","200k","220k"),
+                     limits = c(0,220000)) +
+  labs(x = "EV Type", y = "Base MSRP ($)", title = "Multiple Boxplot of MSRP according to EV Type")
+
+```
 
 ## Electric Range
 
 ## Price vs. Electric Range
+
+### Do we get more Electric Range if we're paying more for the EV?
+```{r message=FALSE, warning=FALSE}
+# When dealing with correlation of MSRP and EV Range, we drop duplicates
+msrp_range <- evp %>%
+  select(Type, MSRP, Range) %>%
+  distinct(MSRP, Range, .keep_all=TRUE)
+
+# we adjust limits of x-axis here to prevent that one extreme outlier
+# from making the graph hard to read
+ggplot(msrp_range, aes(x = MSRP, y = Range, color=Type)) +
+  geom_point(size=1.2,alpha=0.8) +
+  theme_minimal() +
+  scale_x_continuous(breaks = seq(0, 220000, by=20000),
+                     labels = c("0","20k","40k","60k","80k","100k",
+                                "120k","140k","160k","180k","200k","220k"),
+                     limits = c(0,220000)) +
+  labs(x = "Base MSRP ($)", y = "Electric Range (miles)", title = "EV MSRP vs. Electric Range") +
+  scale_color_manual(values=c("#fdcce5","#beb9db"))
+
+```
+
+
