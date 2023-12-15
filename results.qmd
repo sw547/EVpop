@@ -1,6 +1,10 @@
 # Results
-```{r echo=FALSE, message=FALSE, warning=FALSE}
+```{r}
+#| warning: false
+#| message: false
+
 # Data Preprocessing for MacOS
+# We found that the column name would be different when reading files for MacOS and Win system, so we imcorporated two block of preprocessing code
 library(ggplot2)
 library(dplyr)
 library(tidyr)
@@ -16,7 +20,10 @@ evp <- evp %>%
 names(evp) <- c("County", "City", "Make", "Model", "Type", "Range", "MSRP")
 ```
 
-```{r echo=FALSE, message=FALSE}
+```{r}
+#| warning: false
+#| message: false
+
 # Data Preprocessing for Win
 library(readr)
 library(dplyr)
@@ -49,11 +56,12 @@ names(hist_county) = c("Date","County","State","Use","BEV","PHEV","EV","NonEV","
 
 ## EV Trend and Geological Distribution
 
-### How Many Electric Vehicles on the Road?
+### How many EVs on the road?
 
 ```{r}
 #| warning: false
 #| message: false
+
 library(ggplot2)
 library(dplyr)
 hist <- hist %>%
@@ -80,13 +88,14 @@ Electric vehicle ownership surged remarkably from 22,425 units in January 2017 t
 
 Along with surge in overall EV numbers, there has been a notable shift in the composition of EV types. The proportion of BEVs has grown significantly, particularly in 2023. Over the last seven years, BEVs have not only increased in count but also consistently maintained a higher percentage compared to PHEVs.
 
-### How Many EV are there in Each County?
+### How many EVs are there in each county?
 
 ```{r}
 #| warning: false
 #| message: false
 #| fig-width: 12
 #| fig-height: 8
+
 library(sf)
 
 ev_count_per_county <- evpop %>%
@@ -94,6 +103,7 @@ ev_count_per_county <- evpop %>%
   summarise(EV_Count = n())
 
 counties <- st_read("/Users/wsqia/OneDrive/文档/547files/Columbia/courses/STAT5702 EDAV/Final Project/WA_County_Boundaries.dbf", quiet = TRUE)
+# Note: for the shapefile, I tried different methods but I still cannot avoid using local file. Also, the dbf file seems lost some information every time when I upload it. However, I incorporated the data source link in the report for further investigation and reproduction.
 
 counties <- counties %>%
   select(JURISDIC_2, geometry)
@@ -118,6 +128,7 @@ ggplot(data = geo_data) +
        fill = 'EV Count')
 ```
 
+[link to shapefile source (WA County Boundaries)](https://geo.wa.gov/datasets/12712f465fc44fb58328c6e0255ca27e/explore)
 
 *Note: Due to the disproportionately high number of EVs in King County, presenting the counts for other counties on the same scale is challenging. To address this, a graph utilizing a logarithmic scale for the counts has been provided for clearer comparison.*
 
@@ -149,9 +160,9 @@ ggplot(data = geo_data) +
 
 King County stands out for its high number of electric vehicles (EVs) compared to other counties in Washington. Neighboring Snohomish and Pierce Counties also demonstrate a significant number of EV adoptions, with Clark County following closely in terms of EV counts. Additionally, it is worth noting that Garfield County has a distinctly lower EV adoption, highlighting a sharp contrast within the state.
 
-![Outsourced Graph: Population Density in Washington State](https://github.com/sw547/EVpop/blob/main/data/Population_Density_in_WA.png?raw=true) [link to source](https://www.census.gov/library/stories/state-by-state/washington-population-change-between-census-decade.html#:~:text=Race%20and%20ethnicity%20(White%20alone,%25%2C%20up%20from%2054.9%25).)
+![Outsourced Graph: Population Density in Washington State](https://github.com/sw547/EVpop/blob/main/data/Population_Density_in_WA.png?raw=true) [link to graph source](https://www.census.gov/library/stories/state-by-state/washington-population-change-between-census-decade.html#:~:text=Race%20and%20ethnicity%20(White%20alone,%25%2C%20up%20from%2054.9%25).)
 
-In terms of population, King County leads with 2,269,675 residents, while Pierce and Snohomish rank second and third with populations of 921,130 and 827,957, respectively. These counties, particularly King, Pierce, and Clark, have population densities exceeding 500 people per square mile. Snohomish County, with a density between 200 and 499.9 people per square mile, also exhibits a notable concentration of population. This pattern suggests a potential correlation between population density and the number of EV adoptions. However, further research is required to establish a definitive correlation or causative relationship between these factors.
+In terms of population, King County leads with 2,269,675 residents, while Pierce and Snohomish rank second and third with populations of 921,130 and 827,957, respectively. These counties, particularly King, Pierce, and Clark, have population densities exceeding 500 people per square mile. Snohomish County, with a density between 200 and 499.9 people per square mile, also exhibits a notable concentration of population. This pattern suggests a potential correlation between population density and the number of EV adoptions. However, further research is required to establish a definitive correlation or causal relationship between these factors.
 
 ## Popular EV Make
 
@@ -209,7 +220,7 @@ Tesla produces only Battery Electric Vehicles so it makes sense that Tesla also 
 
 As for Plugin-Hybrid Electric Vehicles, there's no brand of predominant position. Toyota, Chevrolet, and BMW, the first to third most popular PHEV brand, have no significant difference in total number in WA, all approximately 5000. The three least popular make comes at the bottom places of the general EV population in WA as well.
 
-In summary, Tesla is the obvious champion here regarding EV and BEV popularity in WA. Toyota is the winner when it comes to PHEV, and Chevrolet outperforms when it comes to participating in both BEV and PHEV market in WA.
+In summary, Tesla is the obvious champion here regarding EV and BEV popularity in WA, which aligns with its reputation. Toyota is the winner when it comes to PHEV, and Chevrolet outperforms when it comes to participating in both BEV and PHEV market in WA.
 
 ### What about models?
 
@@ -228,7 +239,8 @@ ggplot(Model_Count, aes(x = Count, y = reorder(Model, Count))) +
   geom_point(color="#4421af", size=1.2) +
   facet_grid(fct_rev(Make)~.,scale="free_y",space="free_y")+
   theme_linedraw() +
-  theme(text=element_text(size=6),element_line(size=0.3))+
+  theme(text=element_text(size=6),element_line(size=0.3),
+        plot.title = element_text(size = 20))+
   labs(x = "Count", y = "Model", title = "EV Model Popularity in WA facet by Make")
 
 ```
@@ -260,7 +272,7 @@ top_makes_by_county$County <- factor(top_makes_by_county$County, levels = max_co
 
 ggplot(top_makes_by_county, aes(x = Make, y = Count, fill = Make)) +
   geom_bar(stat = "identity") +
-  scale_fill_manual(values = c("#fd7f6f", "#7ebed5", "#b2e961", "#bd7ebe", "#ffb55a", "#ffee65", "#beb9db", "#fdcce5")) +
+  scale_fill_manual(values = c("#fd7f6f", "#7ebed5", "#b2e961", "#bd7ebe", "#ffb55a", "#ffee65", "#8bd3c7", "#e4bcad")) +
   facet_wrap(~ County, scales = "free_y") +  
   theme_minimal() +
   theme(axis.text.x = element_blank(),
@@ -319,7 +331,7 @@ There do exist a difference in price pattern between BEV and PHEV. In general, B
 
 ## Electric Range
 
-### How's the Electric Range for EVs? Are they the same for BEVs and PHEVs?
+### How's the electric range for EVs? Are they the same for BEVs and PHEVs?
 
 ```{r}
 #| warning: false

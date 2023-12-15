@@ -2,7 +2,7 @@
 
 d3.select("#title-1").text("Electric Vehicle Percentage (%) over Time in WA");
 
-d3.select("#description-1").text("This State Level Plot shows overall Electric Vehicle Percentage(Number of Electric Vehicles/Number of Total Vehicles) trend in WA. Compare it with your Selected County"s Plot below!");
+d3.select("#description-1").text("This State Level Plot shows overall Electric Vehicle Percentage (Number of Electric Vehicles/Number of Total Vehicles) trend in WA. Compare it with your Selected County"s Plot below!");
 
 d3.csv("https://raw.githubusercontent.com/sw547/EVpop/main/data/d3_data_1.csv").then(StateData => {
   StateData.forEach(d => {

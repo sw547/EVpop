@@ -12,8 +12,8 @@ In this project, we will use three datasets about electric vehicles in
 Washington State. All datasets are collected and maintained by
 Washington State Department of Licensing, and are published on
 [Washington Open Data](https://data.wa.gov/). The three datasets are
-created on April 16, 2019, May 8, 2019, and June 1, 2020 respectively and 
-are updated monthly with the latest update on November 15th.
+created on April 16, 2019, May 8, 2019, and June 1, 2020 respectively
+and are updated monthly with the latest update on November 15th.
 
 The first dataset [*Electric Vehicle Population
 Data*](https://data.wa.gov/Transportation/Electric-Vehicle-Population-Data/f6w7-q2d2)
@@ -25,23 +25,27 @@ Year, Make, Model, Electric Vehicle Type, Clean Alternative Fuel Vehicle
 Vehicle ID, Vehicle Location, Electric Utility, and 2020 Census Tract.
 The dataset is clean except for some undocumented entries of Electric
 Range and Base MSRP represented as 0, which clearly doesn't make sense.
-We will analyze this further in section 2.3. Note that some vehicles registered 
-in WA are from other states. When doing visualizations we filter
-those out and only focus on electric vehicles in WA.
+We will analyze this further in section 2.3. Note that some vehicles
+registered in WA are from other states. When doing visualizations we
+filter those out and only focus on electric vehicles in WA.
 
 The second dataset [*Electric Vehicle Population Size
 History*](https://data.wa.gov/Transportation/Electric-Vehicle-Population-Size-History/d886-d5q2)
 contains monthly updated total count of Plug-In Hybrid Electric Vehicle,
-Battery Electric Vehicle, and Electric Vehicle Total registered in WA from January,
-2017 to October, 2023. It has 82 rows and 4 columns. This dataset is
-ready-to-use as it has no issues.
+Battery Electric Vehicle, and Electric Vehicle Total registered in WA
+from January, 2017 to October, 2023. It has 82 rows and 4 columns. This
+dataset is ready-to-use as it has no issues.
 
-The third dataset [*Electric Vehicle Population Size History By County*](https://data.wa.gov/Transportation/Electric-Vehicle-Population-Size-History-By-County/3d5d-sdqb/about_data) contains monthly updated count of Plug-In Hybrid Electric Vehicle, Battery Electric 
-Vehicle, Electric Vehicle Total, Non-Electric Vehicle Total, and Electric Vehicle Percentage 
-of different counties from February, 2017 to September, 2023. It has 19,429 rows and 10 Columns. 
-This dataset is also ready-to-use as it has no issues. Note that similar to the first dataset,
-this one also contains vehicles from other states registered in WA . When doing visualizations we 
-filter those out and only focus on electric vehicles in WA as well.
+The third dataset [*Electric Vehicle Population Size History By
+County*](https://data.wa.gov/Transportation/Electric-Vehicle-Population-Size-History-By-County/3d5d-sdqb/about_data)
+contains monthly updated count of Plug-In Hybrid Electric Vehicle,
+Battery Electric Vehicle, Electric Vehicle Total, Non-Electric Vehicle
+Total, and Electric Vehicle Percentage of different counties from
+February, 2017 to September, 2023. It has 19,429 rows and 10 Columns.
+This dataset is also ready-to-use as it has no issues. Note that similar
+to the first dataset, this one also contains vehicles from other states
+registered in WA . When doing visualizations we filter those out and
+only focus on electric vehicles in WA as well.
 
 Our data source allows us to download csv files which we will then
 upload to our github repository for further usage.
@@ -79,7 +83,7 @@ upload to our github repository for further usage.
     -   We would also address this question using [*Electric Vehicle
         Population
         Data*](https://data.wa.gov/Transportation/Electric-Vehicle-Population-Data/f6w7-q2d2).
-    -   We intend to create a boxplot for electric range for all EVs. 
+    -   We intend to create a boxplot for electric range for all EVs.
     -   A faceted boxplot for different EV type (PHEV & BEV) is also
         necessary to explore the difference.
 
@@ -89,12 +93,13 @@ upload to our github repository for further usage.
         Data*](https://data.wa.gov/Transportation/Electric-Vehicle-Population-Data/f6w7-q2d2)to
         investigate this question.
     -   We prepare to draw a boxplot and/or a ridgeline plot for MSRP of
-        EV, as well as a faceted plot for PHEV and BEV. 
+        EV, as well as a faceted plot for PHEV and BEV.
     -   Moreover, we hope to graph a scatterplot of MSRP vs. electric
-        range, separated by EV type. 
+        range, separated by EV type.
 
 ## Missing value analysis
-```{r echo=FALSE, message=FALSE}
+
+```{r warning=FALSE, message=FALSE}
 library(ggplot2)
 library(dplyr)
 library(tidyr)
@@ -104,9 +109,11 @@ evt <- read.csv("https://raw.githubusercontent.com/sw547/EVpop/main/data/Electri
 names(evt) <- c("Date", "PHEV_Count", "BEV_Count", "EV_Count")
 plot_missing(evt, percent = TRUE)
 ```
-There's no missing value in *Electric Vehicle Population Size History* dataset, as we can tell from the graph.
 
-```{r echo=FALSE, message=FALSE}
+There's no missing value in *Electric Vehicle Population Size History*
+dataset, as we can tell from the graph.
+
+```{r warning=FALSE, message=FALSE}
 evp <- read.csv("https://raw.githubusercontent.com/sw547/EVpop/main/data/Electric_Vehicle_Population_Data.csv")
 
 evp <- evp %>%
@@ -131,17 +138,27 @@ ggplot(tidyevp, aes(x = key, y = id, fill = missing)) +
   scale_fill_viridis_d() +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
-```{r echo=FALSE, message=FALSE}
+
+```{r warning=FALSE, message=FALSE}
 plot_missing(evp, percent = TRUE)
 ```
-As for *Electric Vehicle Population Data* dataset, it might appear at first that missing values 
-only exist in columns that we're not interested in. However, we notice entries with value of "0" for 
-Base MSRP and Electric Range, which clearly does NOT make sense and thus should be treated as missing 
-values. From the graph we can tell that other variables of interest have no missing values. Almost all values 
-of Base MSRP are missing and about a half of Electric Range values are missing, with an extremely low percentage 
-of rows not missing values from any columns. We also notice that for some specific model, we have instances for which Base MSRP is missing and instances for which Base MSRP is not missing, similar with Electric Range. We address this issue when pre-processing the data, by filling known missing values using non-missing instances and filling unknown missing values with data provided by [Kelley Blue Book](https://www.kbb.com/).
 
-```{r echo=FALSE, message=FALSE}
+As for *Electric Vehicle Population Data* dataset, it might appear at
+first that missing values only exist in columns that we're not
+interested in. However, we notice entries with value of "0" for Base
+MSRP and Electric Range, which clearly does NOT make sense and thus
+should be treated as missing values. From the graph we can tell that
+other variables of interest have no missing values. Almost all values of
+Base MSRP are missing and about a half of Electric Range values are
+missing, with an extremely low percentage of rows not missing values
+from any columns. We also notice that for some specific model, we have
+instances for which Base MSRP is missing and instances for which Base
+MSRP is not missing, similar with Electric Range. We address this issue
+when pre-processing the data, by filling known missing values using
+non-missing instances and filling unknown missing values with data
+provided by [Kelley Blue Book](https://www.kbb.com/).
+
+```{r warning=FALSE, message=FALSE}
 evct <- read.csv("https://raw.githubusercontent.com/sw547/EVpop/main/data/Electric_Vehicle_Population_Size_History_By_County.csv")
 
 evct <- evct %>%
@@ -151,4 +168,6 @@ names(evct) = c("Date","County","State","Use","BEV","PHEV","EV","NonEV","V","EV_
 
 plot_missing(evct, percent = TRUE)
 ```
-There's no missing value in *Electric Vehicle Population Size History By County* dataset, as we can tell from the graph.
+
+There's no missing value in *Electric Vehicle Population Size History By
+County* dataset, as we can tell from the graph.

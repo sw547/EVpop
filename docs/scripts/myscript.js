@@ -1,11 +1,11 @@
 // add your JavaScript/D3 to this file
 
-d3.select('#title-1').text('Electric Vehicle Percentage (%) over Time in WA');
+d3.select("#title-1").text("Electric Vehicle Percentage (%) over Time in WA");
 
-d3.select("#description-1").text("This State Level Plot shows overall Electric Vehicle Percentage(Number of Electric Vehicles/Number of Total Vehicles) trend in WA. Compare it with your Selected County's Plot below!");
+d3.select("#description-1").text("This State Level Plot shows overall Electric Vehicle Percentage (Number of Electric Vehicles/Number of Total Vehicles) trend in WA. Compare it with your Selected County"s Plot below!");
 
-d3.csv("https://raw.githubusercontent.com/sw547/EVpop/main/data/d3_data_1.csv").then(stateData => {
-  stateData.forEach(d => {
+d3.csv("https://raw.githubusercontent.com/sw547/EVpop/main/data/d3_data_1.csv").then(StateData => {
+  StateData.forEach(d => {
     d.EV_perc = +d.EV_perc;
     d.Date = d3.timeParse("%Y-%m-%d")(d.Date);
   });
@@ -15,7 +15,7 @@ d3.csv("https://raw.githubusercontent.com/sw547/EVpop/main/data/d3_data_1.csv").
   const height = 400 - margin.top - margin.bottom;
 
   const svg = d3.select("#state-plot")
-    .html("") // Clear any previous SVG content
+    .html("")
     .append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
@@ -25,11 +25,11 @@ d3.csv("https://raw.githubusercontent.com/sw547/EVpop/main/data/d3_data_1.csv").
   const xScale = d3.scaleBand()
     .range([0, width])
     .padding(0.1)
-    .domain(stateData.map(d => d.Date));
+    .domain(StateData.map(d => d.Date));
 
   const yScale = d3.scaleLinear()
     .range([height, 0])
-    .domain([0, d3.max(stateData, d => d.EV_perc)]);
+    .domain([0, d3.max(StateData, d => d.EV_perc)]);
 
   svg.append("g")
     .attr("transform", `translate(0,${height})`)
@@ -54,7 +54,7 @@ d3.csv("https://raw.githubusercontent.com/sw547/EVpop/main/data/d3_data_1.csv").
     .text("EV Percentage");
 
   svg.selectAll(".bar")
-    .data(stateData)
+    .data(StateData)
     .enter().append("rect")
     .attr("class", "bar")
     .attr("x", d => xScale(d.Date))
@@ -134,19 +134,19 @@ d3.csv("https://raw.githubusercontent.com/sw547/EVpop/main/data/d3_data.csv").th
   radioContainers.append("input")
     .attr("type", "radio")
     .attr("name", "county")
-    .attr("id", d => "radio-" + d.replace(/\s+/g, ''))
+    .attr("id", d => "radio-" + d.replace(/\s+/g, ""))
     .attr("value", d => d)
     .on("change", event => CreateBarPlot(data, event.target.value));
 
   radioContainers.append("label")
-    .attr("for", d => "radio-" + d.replace(/\s+/g, ''))
+    .attr("for", d => "radio-" + d.replace(/\s+/g, ""))
     .text(d => d);
 
   const FirstCounty = SortedCounties[0];
-  d3.select(`#radio-${FirstCounty.replace(/\s+/g, '')}`).property("checked", true);
+  d3.select(`#radio-${FirstCounty.replace(/\s+/g, "")}`).property("checked", true);
   CreateBarPlot(data, FirstCounty);
 });
 
-d3.select('#title-2').text('Electric Vehicle Percentage (%) over Time in a Selected County in WA');
+d3.select("#title-2").text("Electric Vehicle Percentage (%) over Time in a Selected County in WA");
 
 d3.select("#description-2").text("Select a county in Washington State to see Electric Vehicle Percentage over time in that county. Note that y-axis scale changes for differnet counties for clearer graphs. Counties is sorted from highest mean EV percentage to lowest. Have fun!");

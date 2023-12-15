@@ -1,1 +1,11 @@
 # Conclusion
+
+The EV sector in Washington State exhibits significant growth potential, currently representing just 3% of the overall vehicle market. Notably, the registration of EVs has seen an accelerated increase in recent years. Within this expanding market, battery electric vehicles (BEVs) are experiencing a sharper increase in numbers compared to plug-in hybrid electric vehicles (PHEVs).
+
+Tesla dominants the BEV sub-market across nearly all Washington counties, whereas the PHEV segment is more competitive, with Toyota, Chevrolet, and BMW competing for market leadership.
+
+Price-wise, the average manufacturer's suggested retail price (MSRP) for EVs centers around $30,000, with a distribution that is right-skewed, indicating a number of EVs positioned in the premium price range. Breaking down the cost further, BEVs tend to have a higher median price than PHEVs, though PHEVs exhibit a greater spread of high-priced outliers, likely influenced by luxury car manufacturers.
+
+The disparity in electric range between BEVs and PHEVs is pronounced, which aligns with expectation given that BEVs solely rely on battery power. However, a higher price point does not equal to a longer electric range. As observed, some luxury PHEVs request premium prices despite offering lower electric ranges than their BEV counterparts.
+
+Our study has its constraints, rooted in the scope of the available data. The analysis focuses solely on Washington State's current EV landscape. A more in-depth exploration into the underlying factors influencing these market dynamics, including demographic data and EV charging infrastructure distribution, would require a more expansive dataset.
