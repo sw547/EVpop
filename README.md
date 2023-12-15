@@ -1,28 +1,11 @@
+This book is our exploration on Electric Vehicle market in Washington State. The research is mainly focused on four aspects:
 
+-   Trend in electric vehicle adoption
 
-### Render the book (RStudio)
+-   Popular EV brands and makes
 
-- [ ] 1. If you haven't already, click "Help" "Check for Updates" to make sure you have the latest version of RStudio (and thus have Quarto installed.)
+-   Distribution of electric range for EV
 
-- [ ] 2. Render the web site locally by clicking the "Build" tap on the right and then "Render Book".
+-   Price analysis on EV
 
-- [ ] 3. Use `browseURL("docs/index.html")` to view your book locally (or just open `docs/index.html` in a browser).
-
-- [ ] 4. If it looks good, commit and push all changed files to GitHub. 
-
-(You will need to repeat steps 2 and 4 every time you wish to update the book on GitHub Pages.)
-
-### Update README (GitHub or RStudio)
-
-- [ ] 1. Delete the content of this **README** and add a short description of your project in its place. If you're working locally, be sure to commit and push the changes to GitHub.
-
-### Optional
-
-- [ ] 1. Choose a theme from [https://bootswatch.com/](https://bootswatch.com/) and replace "cosmo" in `_quarto.yml` with your prefered theme.
-
-### Additional features
-
-Please consult the official guide to **quarto** book websites: [https://quarto.org/docs/books/](https://quarto.org/docs/books/)
-
-
-
+Detailed report is documented in the book and all sources are linked. Hope you enjoy!
