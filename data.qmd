@@ -61,6 +61,16 @@ upload to our github repository for further usage.
         dataset.
     -   The stacked bar chart would show the size of population owning
         PHEV, BEV, and their sum (EV) overtime.
+    -   A geological heatmap is suitable foe displaying the number of
+        EVs in each county using [*Electric Vehicle Population Size
+        History By
+        County*](https://data.wa.gov/Transportation/Electric-Vehicle-Population-Size-History-By-County/3d5d-sdqb/about_data)
+        dataset.
+    -   An interactive graph will be used to show the electric vehicle
+        percentage change over time in WA and each counties using
+        [*Electric Vehicle Population Size History By
+        County*](https://data.wa.gov/Transportation/Electric-Vehicle-Population-Size-History-By-County/3d5d-sdqb/about_data)
+        dataset.
 
 -   Popular Electric Vehicle Models/Makes
 
@@ -68,14 +78,14 @@ upload to our github repository for further usage.
         Data*](https://data.wa.gov/Transportation/Electric-Vehicle-Population-Data/f6w7-q2d2),
         which contains detailed information about each registered
         electric vehicle in WA.
-    -   We are going to plot three pie charts to show the percentage of
-        each make for PHEV, BEV, and EV. A cleveland dot plot is also
+    -   We are going to plot bar charts to show the percentage of each
+        make for PHEV, BEV, and EV. A cleveland dot plot is also
         suitable for displaying the ranking of different makes.
     -   We would then draw a faceted bar chart for the count of all
         makes at county level.
     -   After that, we would generate a list of interested makes.
         Therefore, we are able to take a closer look at customer's
-        preference by ploting a cleveland dot plot of models for subset
+        preference by plotting a Cleveland dot plot of models for subset
         of makes.
 
 -   Distribution of Electric Range
@@ -83,17 +93,17 @@ upload to our github repository for further usage.
     -   We would also address this question using [*Electric Vehicle
         Population
         Data*](https://data.wa.gov/Transportation/Electric-Vehicle-Population-Data/f6w7-q2d2).
-    -   We intend to create a boxplot for electric range for all EVs.
-    -   A faceted boxplot for different EV type (PHEV & BEV) is also
-        necessary to explore the difference.
+    -   We intend to create a histogram for electric range for all EVs.
+    -   A boxplot for different EV type (PHEV & BEV) is also necessary
+        to explore the difference.
 
 -   Price Analysis
 
     -   Similarly, we would use [*Electric Vehicle Population
-        Data*](https://data.wa.gov/Transportation/Electric-Vehicle-Population-Data/f6w7-q2d2)to
-        investigate this question.
-    -   We prepare to draw a boxplot and/or a ridgeline plot for MSRP of
-        EV, as well as a faceted plot for PHEV and BEV.
+        Data*](https://data.wa.gov/Transportation/Electric-Vehicle-Population-Data/f6w7-q2d2)
+        to investigate this question.
+    -   We prepare to draw a histogram for MSRP of EV, as well as a
+        faceted plot for PHEV and BEV.
     -   Moreover, we hope to graph a scatterplot of MSRP vs. electric
         range, separated by EV type.
 
